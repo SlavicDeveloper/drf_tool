@@ -1,14 +1,10 @@
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Project
-from .models import TODO
-
-from .serializers import ProjectModelSerializer
-from .serializers import TODOModelSerializer
-
-from rest_framework.pagination import LimitOffsetPagination
 from .filters import ProjectFilter
+from .models import TODO, Project
+from .serializers import ProjectModelSerializer, TODOModelSerializer
 
 
 class ProjectLimitOffSetPagination(LimitOffsetPagination):
@@ -30,8 +26,7 @@ class TODOModelViewSet(ModelViewSet):
     queryset = TODO.objects.all()
     serializer_class = TODOModelSerializer
     pagination_class = TODOLimitOffSetPagination
-    filterset_fields = ['project_name', 'text', 'creation_date', 'update_date',
-                        'users_checklist_author', 'status']
+    filterset_fields = ["project_name", "text", "creation_date", "update_date", "users_checklist_author", "status"]
 
     def destroy(self, request, pk=None):
         try:
