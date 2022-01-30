@@ -20,12 +20,12 @@ from userapp.views import UserModelViewSet
 from todoapp.views import ProjectModelViewSet, TODOModelViewSet
 
 router = DefaultRouter()
-router.register("modified_users", UserModelViewSet, basename="users")
+router.register("modified_users", UserModelViewSet)
 router.register("modified_projects", ProjectModelViewSet)
 router.register("modified_todo", TODOModelViewSet)
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include(router.urls)),
-    path("viewsets/", include(router.urls)),
+    # path("viewsets/", include(router.urls)),
 ]
