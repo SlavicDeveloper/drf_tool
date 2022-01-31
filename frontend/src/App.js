@@ -62,9 +62,10 @@ class App extends React.Component {
 
    render () {
        return (
-
+        <main>
           <div className="App">
             <BrowserRouter>
+            <Menubar />
                 <nav>
                    <ul>
                     <li>
@@ -84,10 +85,10 @@ class App extends React.Component {
                         <Route exact path='/todos' component={() => <ToDoItemList items={this.state.todos} />}  />
                         <Route component={NotFound404} />
                 </Switch>
+                <Footer />
               </BrowserRouter>
           </div>
-
-
+        </main>
        )
    }
 }
