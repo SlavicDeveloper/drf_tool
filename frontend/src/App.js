@@ -4,10 +4,13 @@ import logo from './logo.svg';
 import Footer from './components/footer.js';
 import Menubar from './components/menu.js';
 import './App.css';
+
 import UserList from './components/Users.js';
 import ProjectItemList from './components/Projects.js';
 import ToDoItemList from './components/ToDo.js';
+
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
+import LoginForm from './components/Auth.js'
 
 const NotFound404 = ({ location }) => {
   return (
@@ -77,12 +80,16 @@ class App extends React.Component {
                     <li>
                         <Link to='/todos'>Todos</Link>
                     </li>
+                    <li>
+                        <Link to='/login'>Login</Link>
+                    </li>
                    </ul>
                 </nav>
                 <Switch>
                         <Route exact path='/' component={() => <UserList items={this.state.users} />}  />
                         <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} />}  />
                         <Route exact path='/todos' component={() => <ToDoItemList items={this.state.todos} />}  />
+                        <Route exact path='/login' component={() => <LoginForm />} />
                         <Route component={NotFound404} />
                 </Switch>
                 <Footer />
