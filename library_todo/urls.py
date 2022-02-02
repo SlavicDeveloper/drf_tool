@@ -19,6 +19,7 @@ from rest_framework.routers import DefaultRouter
 
 from todoapp.views import ProjectModelViewSet, TODOModelViewSet
 from userapp.views import UserModelViewSet
+from rest_framework.authtoken import views
 
 router = DefaultRouter()
 router.register("modified_users", UserModelViewSet)
@@ -29,4 +30,5 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include(router.urls)),
     # path("viewsets/", include(router.urls)),
+    path('api-token-auth/', views.obtain_auth_token)
 ]
