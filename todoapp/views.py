@@ -6,6 +6,8 @@ from .filters import ProjectFilter
 from .models import TODO, Project
 from .serializers import ProjectModelSerializer, TODOModelSerializer
 
+from rest_framework import viewsets, permissions
+
 
 class ProjectLimitOffSetPagination(LimitOffsetPagination):
     default_limit = 10
@@ -16,6 +18,7 @@ class TODOLimitOffSetPagination(LimitOffsetPagination):
 
 
 class ProjectModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     pagination_class = ProjectLimitOffSetPagination
@@ -23,6 +26,7 @@ class ProjectModelViewSet(ModelViewSet):
 
 
 class TODOModelViewSet(ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = TODO.objects.all()
     serializer_class = TODOModelSerializer
     pagination_class = TODOLimitOffSetPagination
