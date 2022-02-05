@@ -3,6 +3,7 @@ import json
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate
 from django.contrib.auth.models import User
+from mixer.backend.django import mixer
 from .views import UserModelViewSet
 
 
@@ -36,3 +37,5 @@ class TestUserModelViewSet(TestCase):  # OK, пользователи получ
         view = UserModelViewSet.as_view({'post': 'create'})
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
