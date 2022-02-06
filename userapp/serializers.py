@@ -6,4 +6,10 @@ from .models import User
 class UserModelSerializer(ModelSerializer):
     class Meta:
         model = User
+        exclude = ["is_staff"]
+
+
+class UserModelWithStaffSerializer(ModelSerializer):
+    class Meta:
+        model = User
         fields = "__all__"

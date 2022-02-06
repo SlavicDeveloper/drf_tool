@@ -18,7 +18,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from todoapp.views import ProjectModelViewSet, TODOModelViewSet
-from userapp.views import UserModelViewSet
+from userapp.views import UserModelViewSet, UserModelWithStaffSerializer
 from rest_framework.authtoken import views
 
 router = DefaultRouter()
@@ -30,5 +30,6 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("api/", include(router.urls)),
     # path("viewsets/", include(router.urls)),
-    path('api-token-auth/', views.obtain_auth_token)
+    path('api-token-auth/', views.obtain_auth_token),
+    path("api/v<int:version>/users", UserModelViewSet.as_view({'get': 'list'}))
 ]
