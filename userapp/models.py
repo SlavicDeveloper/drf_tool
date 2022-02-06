@@ -6,3 +6,4 @@ class User(models.Model):
     last_name = models.CharField(max_length=64, blank=False)
     birthday_year = models.PositiveIntegerField()
     email = models.EmailField(unique=True, blank=False)
+    is_staff = models.BooleanField(default=False)
