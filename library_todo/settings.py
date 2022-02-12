@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django_filters",
     'rest_framework.authtoken',
     'drf_yasg',
+    "graphene_django",
 ]
 
 MIDDLEWARE = [
@@ -150,4 +151,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 
- }
+}
+
+GRAPHENE = {
+    "SCHEMA": "library_todo.schema.schema",
+}
