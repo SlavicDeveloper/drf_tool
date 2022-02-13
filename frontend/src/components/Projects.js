@@ -1,8 +1,11 @@
 import React from 'react'
 
-const ProjectItem = ({item}) => {
+const ProjectItem = ({item, delete_project}) => {
     return (
         <tr>
+            <td>
+                {item.id}
+            </td>
             <td>
                 {item.name}
             </td>
@@ -12,13 +15,19 @@ const ProjectItem = ({item}) => {
             <td>
                 {item.git_repo}
             </td>
+            <td>
+                <button onClick={() => delete_project(item.id)} type="button">Delete</button>
+            </td>
         </tr>
     )
 }
 
-const ProjectItemList = ({items}) => {
+const ProjectItemList = ({items, delete_project}) => {
     return (
         <table>
+                <th>
+                    Project id
+                </th>
                 <th>
                     Project name
                 </th>
@@ -28,7 +37,9 @@ const ProjectItemList = ({items}) => {
                 <th>
                     Project git repo
                 </th>
-                {items.map((item) => <ProjectItem item={item} />)}
+                <th>
+                </th>
+                {items.map((item) => <ProjectItem item={item} delete_project={delete_project} />)}
         </table>
     )
 }

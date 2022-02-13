@@ -84,7 +84,7 @@ class App extends React.Component {
                 )
             }).catch(error => console.log(error))
 
-        axios.get('http://127.0.0.1:8000/api/modified_projects', {headers})
+        axios.get('http://127.0.0.1:8000/api/modified_projects/', {headers})
             .then(response => {
                 this.setState({projects: response.data.results})
             }).catch(error => console.log(error))
@@ -92,11 +92,19 @@ class App extends React.Component {
 
 
 
-        axios.get('http://127.0.0.1:8000/api/modified_todo', {headers})
+        axios.get('http://127.0.0.1:8000/api/modified_todo/', {headers})
             .then(response => {
                 this.setState({todos: response.data.results})
             }).catch(error => console.log(error))
               this.setState({todos: []})
+    }
+
+    delete_project(id){
+        const headers = this.get_headers()
+        axios.delete('http://127.0.0.1:8000/api/modified_projects/' + id, {headers})
+            .then(response => {
+                this.setState({projects: this.state.projects.filter((item) => item.id !== id)})
+            }).catch(error => console.log(error))
     }
 
     componentDidMount() {
@@ -127,7 +135,7 @@ class App extends React.Component {
                 </nav>
                 <Switch>
                         <Route exact path='/' component={() => <UserList items={this.state.users} />}  />
-                        <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} />}  />
+                        <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} delete_project={(id) => this.delete_project(id)} />}  />
                         <Route exact path='/todos' component={() => <ToDoItemList items={this.state.todos} />}  />
                         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                         <Route component={NotFound404} />
