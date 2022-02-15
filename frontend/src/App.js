@@ -10,8 +10,8 @@ import ProjectItemList from './components/Projects.js';
 import ToDoItemList from './components/ToDo.js';
 
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
-import LoginForm from './components/Auth.js'
-
+import LoginForm from './components/Auth.js';
+import ProjectForm from './components/ProjectForm.js';
 import Cookies from 'universal-cookie';
 
 const NotFound404 = ({ location }) => {
@@ -115,11 +115,30 @@ class App extends React.Component {
             }).catch(error => console.log(error))
     }
 
-    componentDidMount() {
+    create_project(name, users, git_repo){
+        const headers = this.get_headers()
+        const data = {name: name, users: [users], git_repo: git_repo}
+        axios.post('http://127.0.0.1:8000/api/modified_projects/', data, {headers})
+            .then(response => {
+                let new_project = response.data
+                const user = this.state.users.filter((item) => item.id === new_project.users)[0]
+                new_project.users = user
+                this.setState({projects: [...this.state.projects, new_project]})
+            })
+
+            }
+
+
+
+
+
+    componentDidMount()
+    {
         this.get_token_from_storage()
     }
 
-   render () {
+   render ()
+   {
        return (
         <main>
           <div className="App">
@@ -146,6 +165,7 @@ class App extends React.Component {
                         <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} delete_project={(id) => this.delete_project(id)} />}  />
                         <Route exact path='/todos' component={() => <ToDoItemList items={this.state.todos} delete_todo={(id) => this.delete_todo(id)}/>}  />
                         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
+                        <Route exact path='/new_projects/create' component={() => <ProjectForm create_project={(name, users, git_repo) => this.create_project(name, users, git_repo)} />} />
                         <Route component={NotFound404} />
                 </Switch>
                 <Footer />
