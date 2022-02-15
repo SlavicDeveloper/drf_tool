@@ -14,5 +14,5 @@ class TODO(models.Model):
     text = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    users_checklist_author = models.ForeignKey(User, on_delete=models.PROTECT)  # запрет на удаление пользователя
+    users_checklist_author = models.ForeignKey(User, on_delete=models.CASCADE)  # запрет на удаление пользователя
     status = models.BooleanField(default=True)
