@@ -26,6 +26,7 @@ const ProjectItem = ({item, delete_project}) => {
 const ProjectItemList = ({items, delete_project}) => {
     return (
         <div>
+
             <table>
                     <th>
                         Project id

@@ -12,6 +12,8 @@ import ToDoItemList from './components/ToDo.js';
 import {BrowserRouter, Route, Link, Switch} from 'react-router-dom';
 import LoginForm from './components/Auth.js';
 import ProjectForm from './components/ProjectForm.js';
+import TodoForm from './components/TodoForm.js'
+
 import Cookies from 'universal-cookie';
 
 const NotFound404 = ({ location }) => {
@@ -26,10 +28,11 @@ class App extends React.Component {
    constructor(props) {
        super(props)
        this.state = {
-           'users': [],
-           'projects':[],
-           'todos':[],
-           'token':''
+           users: [],
+           projects: [],
+           todos:[],
+           token:'',
+
        }
    }
 
@@ -74,15 +77,11 @@ class App extends React.Component {
     load_data(){
         const headers = this.get_headers()
 
-        axios.get("http://127.0.0.1:8000/api/modified_users")
+        axios.get("http://127.0.0.1:8000/api/modified_users/")
             .then(response => {
-                const users = response.data.results
-                    this.setState(
-                    {
-                        "users":users
-                    }
-                )
+                this.setState({users: response.data.results})
             }).catch(error => console.log(error))
+              this.setState({users: []})
 
         axios.get('http://127.0.0.1:8000/api/modified_projects/', {headers})
             .then(response => {
@@ -112,25 +111,21 @@ class App extends React.Component {
         axios.delete('http://127.0.0.1:8000/api/modified_todo/' + id, {headers})
             .then(response => {
                 this.setState({todos: this.state.todos.filter((item) => item.id !== id)})
-            }).catch(error => console.log(error))
+            })
     }
 
     create_project(name, users, git_repo){
         const headers = this.get_headers()
         const data = {name: name, users: [users], git_repo: git_repo}
         axios.post('http://127.0.0.1:8000/api/modified_projects/', data, {headers})
-            .then(response => {
-                let new_project = response.data
-                const user = this.state.users.filter((item) => item.id === new_project.users)[0]
-                new_project.users = user
-                this.setState({projects: [...this.state.projects, new_project]})
-            })
+
 
             }
-
-
-
-
+    create_todo(project_name, text, creation_date, update_date, users_checklist_author){
+        const headers = this.get_headers()
+        const data = {project_name: project_name, text: text, creation_date: creation_date, update_date: update_date, users_checklist_author: users_checklist_author}
+        axios.post('http://127.0.0.1:8000/api/modified_todo/', data, {headers})
+            }
 
     componentDidMount()
     {
@@ -142,6 +137,7 @@ class App extends React.Component {
        return (
         <main>
           <div className="App">
+
             <BrowserRouter>
             <Menubar />
                 <nav>
@@ -162,10 +158,11 @@ class App extends React.Component {
                 </nav>
                 <Switch>
                         <Route exact path='/' component={() => <UserList items={this.state.users} />}  />
-                        <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} delete_project={(id) => this.delete_project(id)} />}  />
+                        <Route exact path='/projects' component={() => <ProjectItemList items={this.state.projects} delete_project={(id) => this.delete_project(id)} filterProject = {(e) => this.filterProject(e)} />}  />
                         <Route exact path='/todos' component={() => <ToDoItemList items={this.state.todos} delete_todo={(id) => this.delete_todo(id)}/>}  />
                         <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
                         <Route exact path='/new_projects/create' component={() => <ProjectForm create_project={(name, users, git_repo) => this.create_project(name, users, git_repo)} />} />
+                        <Route exact path='/new_todo/create' component={() => <TodoForm create_todo={(project_name, text, creation_date, update_date, users_checklist_author) => this.create_todo(project_name, text, creation_date, update_date, users_checklist_author)} />} />
                         <Route component={NotFound404} />
                 </Switch>
                 <Footer />

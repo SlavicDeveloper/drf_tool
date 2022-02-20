@@ -44,9 +44,9 @@ class ProjectForm extends React.Component {
 
                 <div className="form-group">
                     <label for="git_repo">git_repo</label>
-                <input type="text" className="form-control" name="git_repo" value={this.state.git_repo} onChange={(event)=>this.handleChange(event)} />
+                        <input type="text" className="form-control" name="git_repo" value={this.state.git_repo} onChange={(event)=>this.handleChange(event)} />
+               </div>
 
-              </div>
               <input type="submit" className="btn btn-primary" value="Save" />
             </form>);
     }
