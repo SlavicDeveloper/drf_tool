@@ -4,6 +4,9 @@ import React from 'react'
 const UserItem = ({item}) => {
    return (
        <tr>
+            <td>
+               {item.id}
+           </td>
            <td>
                {item.first_name}
            </td>
@@ -24,6 +27,9 @@ const UserItem = ({item}) => {
 const UserList = ({items}) => {
    return (
        <table>
+                <th>
+                   Id
+               </th>
                <th>
                    First name
                </th>

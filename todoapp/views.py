@@ -32,13 +32,13 @@ class TODOModelViewSet(ModelViewSet):
     pagination_class = TODOLimitOffSetPagination
     filterset_fields = ["project_name", "text", "creation_date", "update_date", "users_checklist_author", "status"]
 
-    def destroy(self, request, pk=None):
-        try:
-            elem = self.get_object()
-            elem.status = False
-            elem.save()
-        except:
-            return Response(status="404_not_found")
-        else:
-            return Response(status="404_not_found")
+    # def destroy(self, request, pk=None):
+    #     try:
+    #         elem = self.get_object()
+    #         elem.status = False
+    #         elem.save()
+    #     except:
+    #         return Response(status="404_not_found")
+    #     else:
+    #         return Response(status="404_not_found")
 
