@@ -8,6 +8,7 @@ class ProjectForm extends React.Component {
             "name": '',
             "users": [],
             "git_repo": '',
+
         }
     }
 
@@ -26,12 +27,16 @@ class ProjectForm extends React.Component {
     handleSubmit(event)
         {
           this.props.create_project(this.state.name, this.state.users, this.state.git_repo)
+          this.props.search_projects(this.state.value)
           event.preventDefault()
         }
 
     render()
         {
-        return(<form onSubmit={(event)=> this.handleSubmit(event)}>
+
+        return(
+
+        <form onSubmit={(event)=> this.handleSubmit(event)}>
                 <div className="form-group">
                     <label for="login">name</label>
                         <input type="text" className="form-control" name="name" value={this.state.name} onChange={(event)=>this.handleChange(event)} />
@@ -48,6 +53,7 @@ class ProjectForm extends React.Component {
                </div>
 
               <input type="submit" className="btn btn-primary" value="Save" />
+
             </form>);
     }
 }
