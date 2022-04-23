@@ -60,7 +60,7 @@ class App extends React.Component {
       }
 
     get_token(username, password) {
-        axios.post('http://127.0.0.1:8000/api-token-auth/', {username: username, password: password})
+        axios.post('http://185.20.227.90:8000/api-token-auth/', {username: username, password: password})
         .then(response => {
             this.set_token(response.data['token'])
         }).catch(error => alert('Неверный логин или пароль'))
@@ -80,13 +80,13 @@ class App extends React.Component {
     load_data(){
         const headers = this.get_headers()
 
-        axios.get("http://127.0.0.1:8000/api/modified_users/")
+        axios.get("http://185.20.227.90:8000/api/modified_users/")
             .then(response => {
                 this.setState({users: response.data.results})
             }).catch(error => console.log(error))
               this.setState({users: []})
 
-        axios.get('http://127.0.0.1:8000/api/modified_projects/', {headers})
+        axios.get('http://185.20.227.90:8000/api/modified_projects/', {headers})
             .then(response => {
                 this.setState({projects: response.data.results})
             }).catch(error => console.log(error))
@@ -94,7 +94,7 @@ class App extends React.Component {
 
 
 
-        axios.get('http://127.0.0.1:8000/api/modified_todo/', {headers})
+        axios.get('http://185.20.227.90:8000/api/modified_todo/', {headers})
             .then(response => {
                 this.setState({todos: response.data.results})
             }).catch(error => console.log(error))
@@ -103,7 +103,7 @@ class App extends React.Component {
 
     delete_project(id){
         const headers = this.get_headers()
-        axios.delete('http://127.0.0.1:8000/api/modified_projects/' + id, {headers})
+        axios.delete('http://185.20.227.90:8000/api/modified_projects/' + id, {headers})
             .then(response => {
                 this.setState({projects: this.state.projects.filter((item) => item.id !== id)})
             }).catch(error => console.log(error))
@@ -111,7 +111,7 @@ class App extends React.Component {
 
     delete_todo(id){
         const headers = this.get_headers()
-        axios.delete('http://127.0.0.1:8000/api/modified_todo/' + id, {headers})
+        axios.delete('http://185.20.227.90:8000/api/modified_todo/' + id, {headers})
             .then(response => {
                 this.setState({todos: this.state.todos.filter((item) => item.id !== id)})
             })
@@ -120,20 +120,20 @@ class App extends React.Component {
     create_project(name, users, git_repo){
         const headers = this.get_headers()
         const data = {name: name, users: [users], git_repo: git_repo}
-        axios.post('http://127.0.0.1:8000/api/modified_projects/', data, {headers})
+        axios.post('http://185.20.227.90:8000/api/modified_projects/', data, {headers})
             }
 
     create_todo(project_name, text, creation_date, update_date, users_checklist_author){
         const headers = this.get_headers()
         const data = {project_name: project_name, text: text, creation_date: creation_date, update_date: update_date, users_checklist_author: users_checklist_author}
-        axios.post('http://127.0.0.1:8000/api/modified_todo/', data, {headers})
+        axios.post('http://185.20.227.90:8000/api/modified_todo/', data, {headers})
             }
 
 
 
     search_projects(value){
         const headers = this.get_headers()
-        axios.get('http://127.0.0.1:8000/api/modified_projects/', {headers})
+        axios.get('http://185.20.227.90:8000/api/modified_projects/', {headers})
             .then(response => {
                     this.setState({projects: response.data.results})
                     this.setState({projects: this.state.projects.filter((item) => item.name.includes(value))})
